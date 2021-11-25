@@ -210,6 +210,10 @@ function DragAndDropEditBlock(runtime, element, params) {
                         self.scrollToTop();
                         $zoneTab.find('input:first').select();
 
+                        if (window.CustomizeFunctionsHook && window.CustomizeFunctionsHook['dropdown'] && typeof CustomizeFunctionsHook['dropdown'] === 'function') {
+                            window.CustomizeFunctionsHook.dropdown();
+                        }
+
                         $(this).one('click', function loadThirdTab(e) {
                             // $zoneTab -> $itemTab
                             e.preventDefault();
@@ -240,6 +244,10 @@ function DragAndDropEditBlock(runtime, element, params) {
                                     e.preventDefault();
                                     _fn.build.form.submit();
                                 });
+                        
+                            if (window.CustomizeFunctionsHook && window.CustomizeFunctionsHook['dropdown'] && typeof CustomizeFunctionsHook['dropdown'] === 'function') {
+                                window.CustomizeFunctionsHook.dropdown();
+                            }
                         });
                     });
 
@@ -252,6 +260,10 @@ function DragAndDropEditBlock(runtime, element, params) {
                             _fn.build.form.zone.add();
                             // Set focus to first field of the new zone.
                             $('.zones-form .zone-row:last input[type=text]:first', element).select();
+                        
+                            if (window.CustomizeFunctionsHook && window.CustomizeFunctionsHook['dropdown'] && typeof CustomizeFunctionsHook['dropdown'] === 'function') {
+                                window.CustomizeFunctionsHook.dropdown();
+                            }
                         })
                         .on('click', '.remove-zone', _fn.build.form.zone.remove)
                         .on('input', '.zone-row input', _fn.build.form.zone.changedInputHandler)
@@ -295,6 +307,10 @@ function DragAndDropEditBlock(runtime, element, params) {
                             _fn.build.form.item.add();
                             // Set focus to first field of the new item.
                             $('.items-form .item:last input[type=text]:first', element).select();
+                        
+                            if (window.CustomizeFunctionsHook && window.CustomizeFunctionsHook['dropdown'] && typeof CustomizeFunctionsHook['dropdown'] === 'function') {
+                                window.CustomizeFunctionsHook.dropdown();
+                            }
                         })
                         .on('click', '.remove-item', _fn.build.form.item.remove)
                         .on('click', '.advanced-link button', _fn.build.form.item.showAdvancedSettings)
@@ -551,6 +567,10 @@ function DragAndDropEditBlock(runtime, element, params) {
                                     align: 'center'
                                 });
                             });
+                        
+                            if (window.CustomizeFunctionsHook && window.CustomizeFunctionsHook['dropdown'] && typeof CustomizeFunctionsHook['dropdown'] === 'function') {
+                                window.CustomizeFunctionsHook.dropdown();
+                            }
                         },
                         generateBackgroundAndZones: function() {
                             var params = _fn.build.form.zone.getAutozoneParams();

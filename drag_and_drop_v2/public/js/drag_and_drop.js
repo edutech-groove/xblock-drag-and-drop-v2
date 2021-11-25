@@ -375,11 +375,8 @@ function DragAndDropTemplates(configuration) {
         );
     };
 
-    var sidebarButtonTemplate = function(buttonClass, iconClass, buttonText, options) {
+    var sidebarButtonTemplate = function(buttonClass, icon, buttonText, options) {
         options = options || {};
-        if (options.spinner) {
-            iconClass = 'fa-spin.fa-spinner';
-        }
         return (
             h('span.sidebar-button-wrapper', {}, [
                 h(
@@ -389,8 +386,9 @@ function DragAndDropTemplates(configuration) {
                         disabled: options.disabled || options.spinner || false
                     },
                     [
-                        h("span.btn-icon.fa", {className: iconClass, attributes: {"aria-hidden": true}}),
-                        buttonText
+                        h('div', {
+                            className: 'btn-content',
+                            innerHTML: icon + buttonText}),
                     ]
                 )
             ])
@@ -406,7 +404,7 @@ function DragAndDropTemplates(configuration) {
             };
             showAnswerButton = sidebarButtonTemplate(
                 "show-answer-button",
-                "fa-info-circle",
+                "<svg width='16' height='16'><use xlink:href='#info-circle-icon'></use></svg>",
                 gettext('Show Answer'),
                 options
             );
@@ -419,13 +417,13 @@ function DragAndDropTemplates(configuration) {
             h("div.action-toolbar-item.sidebar-buttons", {}, [
                 sidebarButtonTemplate(
                     go_to_beginning_button_class,
-                    "fa-arrow-up",
+                    "",
                     gettext("Go to Beginning"),
                     {disabled: ctx.disable_go_to_beginning_button}
                 ),
                 sidebarButtonTemplate(
                     "reset-button",
-                    "fa-refresh",
+                    "<svg width='16' height='16'><use xlink:href='#refresh-icon'></use></svg>",
                     gettext('Reset'),
                     {disabled: ctx.disable_reset_button}
                 ),
@@ -478,62 +476,54 @@ function DragAndDropTemplates(configuration) {
                 style: popup_style
             },
             [
-                h(
-                    'button.unbutton.close-feedback-popup-button.close-feedback-popup-desktop-button',
-                    {},
-                    [
-                        h(
-                            'span.sr',
-                            {
-                                innerHTML: gettext("Close")
-                            }
-                        ),
-                        h(
-                            'span.icon.fa.fa-times-circle',
-                            {
-                                attributes: {
-                                    'aria-hidden': true
+                h('div', {},
+                [
+                    h(
+                        'button.unbutton.close-feedback-popup-button.close-feedback-popup-desktop-button',
+                        {},
+                        [
+                            h(
+                                'span', { innerHTML: '&times;' }
+                            )
+                        ]
+                    ),
+                    h(
+                        ctx.last_action_correct ? 'div.popup-header-icon' : 'div.popup-header-icon.popup-header-icon-incorrect',
+                        {},
+                        [
+                            h(
+                                ctx.last_action_correct ? 'span.icon.fa.fa-check-circle' : 'span.icon.fa.fa-exclamation-circle',
+                                {
+                                    attributes: {
+                                        'aria-hidden': true
+                                    }
                                 }
-                            }
-                        )
-                    ]
-                ),
-                h(
-                    ctx.last_action_correct ? 'div.popup-header-icon' : 'div.popup-header-icon.popup-header-icon-incorrect',
-                    {},
-                    [
-                        h(
-                            ctx.last_action_correct ? 'span.icon.fa.fa-check-circle' : 'span.icon.fa.fa-exclamation-circle',
-                            {
-                                attributes: {
-                                    'aria-hidden': true
-                                }
-                            }
-                        )
-                    ]
-                ),
-                h(
-                    'div.popup-header-text',
-                    {},
-                    ctx.last_action_correct ? gettext("Correct") : gettext("Incorrect")
-                ),
-                popup_content,
-                h(
-                    'div',
-                    [
-                        h(
-                            'button.unbutton.close-feedback-popup-button.close-feedback-popup-mobile-button',
-                            {},
-                            [
-                                h(
-                                    'span',
-                                    {},
-                                    gettext("Close")
-                                )
-                            ]
-                        )
-                    ]
-                )
+                            )
+                        ]
+                    ),
+                    h(
+                        'div.popup-header-text',
+                        {},
+                        ctx.last_action_correct ? gettext("Correct") : gettext("Incorrect")
+                    ),
+                    popup_content,
+                    h(
+                        'div',
+                        [
+                            h(
+                                'button.unbutton.close-feedback-popup-button.close-feedback-popup-mobile-button',
+                                {},
+                                [
+                                    h(
+                                        'span',
+                                        {},
+                                        gettext("Close")
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                ])
             ]
         )
     };
